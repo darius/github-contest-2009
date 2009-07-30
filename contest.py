@@ -35,7 +35,8 @@ def load(datafile):
     compute_popularity()
 
 def recommendations(u):
-    recs = itertools.chain(recommend_by_language(u), popular_repos)
+    rl = recommend_by_language(u)
+    recs = itertools.chain(rl, popular_repos)
     rs = dedup(follows.get(u, ()), recs)
     return by_popularity(itertools.islice(rs, 10))
 
@@ -58,7 +59,7 @@ popularity_table = {}
 def compute_popularity():
     global popular_repos
     n_users = float(len(follows))
-    for r in popular_repos:
+    for r in followers:
         popularity_table[r] = len(followers.get(r, ())) / n_users
     popular_repos = by_popularity(followers.keys())
 
@@ -82,7 +83,6 @@ def load_lang(file):
 # Recommend the most popular repos that use languages u already watches
 def recommend_by_language(u):
     languages = languages_followed_by(u)
-#    print 'languages', languages
     return most_popular(union(map(repos_using_language, languages)))
 
 empty = frozenset()
@@ -92,7 +92,6 @@ def languages_followed_by(u):
                  for r in follows.get(u, ()))
 
 def repos_using_language(language):
-#    print 'repos using %s: %s' % (language, set(language_repos.get(language, ())))
     return set(language_repos.get(language, ()))
 
 def union(sets):
