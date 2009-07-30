@@ -18,11 +18,12 @@ follows = {}                    # Repos a user follows
 followers = {}                  # Users who follow a repo
 
 def gen_test_users(testfile):
-    i = 0
-    for u in map(int, testfile.read().splitlines()):
-        if i % 100 == 0: print >>err, u
-        i += 1
-        yield u
+    return with_progress(map(int, testfile.read().splitlines()))
+
+def with_progress(iterable):
+    for i, x in itertools.izip(itertools.count(0), iterable):
+        if i % 100 == 0: print >>err, x
+        yield x
 
 def load(datafile):
     for line in datafile.read().splitlines():
