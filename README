@@ -1,0 +1,10 @@
+My entry to http://contest.github.com/.
+
+This started as the simplest method I could imagine: recommend the
+most popular repos not already followed.
+
+I'm surprised it did as well as it did. I tried to refine it a bit by
+also recommending the most popular repos that use languages already
+watched by the user in question; but that almost doubled the size of
+the code, to 100 lines, and added only 0.4% to the score. Never got
+back to the fancier ideas I'd like to have explored.
